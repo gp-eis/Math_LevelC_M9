@@ -1,6 +1,7 @@
-# GP Math · Level C · Month 9
+# GP Month 9 - Math_LevelC_M9
 
-Reserved GitHub Pages URL: https://gp-eis.github.io/Math_LevelC_M9/
+Week 1 Math learner site. Weeks 2-4 remain locked while they are being completed.
 
-This repository contains only a Coming soon holding page.
-The unfinished Month 9 project and its media are not published here.
+Static pages are published to GitHub Pages; runtime assets are served from Cloudflare R2.
+
+GP English: https://www.gpeisenglish.com/level-c-weekly-099
