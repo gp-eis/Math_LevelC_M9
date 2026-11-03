@@ -1,6 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head><!-- Month 9 Stream transport: same native video elements and existing controls. -->
+<link rel="stylesheet" href="apps/shared/stream-player.css?v=d7e857f8fe36">
+<script defer src="apps/shared/vendor/hls-1.7.3.min.js?v=a12e7ee1cd64"></script>
+<script defer src="apps/shared/stream-media.js?v=2e600796f60d"></script>
+<script defer src="apps/shared/stream-player.js?v=99e993da6cfd"></script>
+<script>
+window.M9MathStream = {
+  setSource: function(video, originalUrl) {
+    video.setAttribute('data-stream-lesson', 'math');
+    if (video.id === 'v_player' && video._gpMathChapterReady) {
+      video.removeEventListener('loadeddata', video._gpMathChapterReady);
+      video._gpMathChapterReady = null;
+    }
+    if (video.id === 'v_player' && /w1_literature\.mp4(?:[?#]|$)/.test(String(originalUrl))) {
+      var chapterButtons = document.querySelectorAll('#v_chapters .vChap[data-i], #v_chapters .vChapAll');
+      chapterButtons.forEach(function(button) { button.disabled = true; button.setAttribute('aria-busy', 'true'); });
+      var sourceReady = function() {
+        // Runs after the existing real loadeddata callback has paused and reset.
+        chapterButtons.forEach(function(button) { button.disabled = false; button.removeAttribute('aria-busy'); });
+        video.removeEventListener('loadeddata', sourceReady);
+        video._gpMathChapterReady = null;
+      };
+      video._gpMathChapterReady = sourceReady;
+      video.addEventListener('loadeddata', sourceReady);
+    }
+    if (window.GPStreamMedia) GPStreamMedia.setVideoSource(video, originalUrl);
+    else {
+      // A migrated long lesson must not silently return to the old video host.
+      video.pause();
+      video.removeAttribute('src');
+      video.setAttribute('data-original-source', originalUrl);
+      video.dataset.gpStreamState = 'error';
+      setTimeout(function() { video.dispatchEvent(new Event('error')); }, 0);
+    }
+  },
+  load: function(video) {
+    // Prime only this selected Math film so its real loadeddata shows Play.
+    // Native load() after an owned MSE attachment would reset its blob source.
+    if (window.GPStreamMedia && GPStreamMedia.isStreamVideo(video)) GPStreamMedia.primeVideo(video);
+    else if (video.getAttribute('data-stream-lesson') !== 'math') video.load();
+  },
+  clearSource: function(video) {
+    if (video._gpMathChapterReady) {
+      video.removeEventListener('loadeddata', video._gpMathChapterReady);
+      video._gpMathChapterReady = null;
+    }
+    if (window.GPStreamMedia) GPStreamMedia.destroyVideo(video);
+    video.removeAttribute('src');
+    video.load();
+  },
+  originalSource: function(video) {
+    return (window.GPStreamMedia && GPStreamMedia.getOriginalSource(video)) ||
+      video.getAttribute('src') || video.currentSrc || '';
+  }
+};
+</script>
+
 <link rel="icon" href="https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/giiip-eis-logo.webp">
 <script>window.M9_LIVE={"https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/read_q.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/read_ok_0.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/read_ok_1.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/read_ok_2.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/read_ok_3.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/pres_w1_ca1.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/pres_w1_ca2.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/pres_w1_ns1.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/pres_w1_ns2.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/pres_w1_tm1.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/pres_w1_tm2.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ca1_q.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ca1_circle_q.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ca_c.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ca_hour1.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ca_hour2.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ca_hour3.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ca_hour4.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ca_hour5.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ca_hour6.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ca_hour7.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ca_hour8.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ca_hour9.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ca_hour10.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_2x1_q.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_2x2_q.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_2x3_q.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_2x4_q.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_2x5_q.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_2x6_q.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_2x7_q.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_2x8_q.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_2x9_q.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_3x1_q.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_3x2_q.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_3x3_q.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_3x4_q.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_3x5_q.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_3x6_q.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_3x7_q.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_3x8_q.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_3x9_q.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_2x1_c.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_2x2_c.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_2x3_c.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_2x4_c.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_2x5_c.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_2x6_c.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_2x7_c.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_2x8_c.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_2x9_c.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_3x1_c.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_3x2_c.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_3x3_c.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_3x4_c.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_3x5_c.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_3x6_c.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_3x7_c.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_3x8_c.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns_3x9_c.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns1_heading.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_ns2_heading.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_tm1_q.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_tm1_c.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_tm2_q.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_tm2_c.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_read_pass.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_read_1_1.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_read_1_2.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_read_1_3.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_read_2_1.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_read_2_2.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_read_2_3.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_read_2_4.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_tmx1_q.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_tmx1_c.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_tmx2_q.mp3": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/voice/c9/w1_tmx2_c.mp3": 1};window.M9_NOFILE={"https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/c7/boy_idle.png": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/c7/girl_idle.png": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/c7/hero_boy_idle.png": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/c7/hero_girl_idle.png": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/c7/hub_w1_activities_1.png": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/c7/hub_w1_activities_2.png": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/c7/hub_w1_thinking_math.png": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/c7/hub_w1_videos.png": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/c9w1/heroL_idle.png": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/c9w1/heroR_idle.png": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/kyogu/sentence_rules.png": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/m8/hub/scene_w2_sq.png": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/m8/hub/scene_w3_sq.png": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/m8/hub/scene_w4_sq.png": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/m8/w1_act2.png": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/m8/w1_act3.png": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/m8/w1_concept_thumb.png": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/m8/w1_literature_thumb.png": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/m9/standin_card_activities.png": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/m9/standin_card_literature.png": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/m9/standin_card_videos.png": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/m9/standin_week_thumb.png": 1, "https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/videos/thumbs/c7w1_concept.png": 1};
 /* MONTH 9 - the early shim (head script). A voice file that is not on disk (status MISSING: a marked stand-in) is never requested - no 404, no broken player:
@@ -5910,7 +5966,7 @@ const CTDATA={
 const CT_SOURCE='own';
 const CT_KIND={table:'Table', picture:'Picture Graph', bar:'Bar Graph', line:'Line Graph', pie:'Pie Chart'};
 /* SITE-FIX-BC 10/4 (William 10/4 "follow the book as always"): every Thinking Math 1 picture is the poem book's own layer
-   (G:\Math_Month-8\C8_POEM_ASSETS_WILLIAM_20261004 -> https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/c9w<N>/bk_*.png, verify\sitefixbc_1004\make_art.py): W1 the book's tally
+   (the original poem artwork folder -> https://pub-aa69c309a877446c857c4f2564279578.r2.dev/month9/math/20261102-deploy3/Math_LevelC_M9/assets/c9w<N>/bk_*.png, verify\sitefixbc_1004\make_art.py): W1 the book's tally
    animals; W2 the picture-graph page's own layers - each row's insect beside it and its parts one by one as page 12 draws them (the
    caterpillar; two antennae; four wings; two big red eyes and three small black eyes; six legs); W3 the book's four moon cards; W4 the
    schedule page's objects (bed, lamp, teddy bear, game console, book, backpack, computer, fork, cup). The drawn / cartoon stand-ins and
@@ -7064,7 +7120,7 @@ window.Hub = {
     if(shell) shell.classList.remove('is-ready','is-playing');
     if(startBtn){ startBtn.hidden=true; startBtn.classList.remove('is-pressing'); }
     if(!v) return;
-    try{ v.pause(); v.removeAttribute('src'); v.load(); }catch(e){}
+    try{ v.pause(); M9MathStream.clearSource(v); }catch(e){}
     v.style.display='none';
     if(miss){ miss.style.display='block'; miss.textContent='Video coming soon — add the file to the assets folder.'; }
   },
@@ -7174,7 +7230,7 @@ window.Hub = {
       player.style.display='none';
       if(shell) shell.classList.remove('is-ready','is-playing');
       if(startBtn) startBtn.hidden=true;
-      if(miss){ miss.style.display='block'; miss.textContent='Video coming soon — add "'+meta.src+'" to the assets folder.'; }
+      if(miss){ miss.style.display='block'; miss.textContent=(player.getAttribute('data-stream-lesson')==='math')?'The video could not load. Please try again.':'Video coming soon — add "'+meta.src+'" to the assets folder.'; }
     };
     player.onloadedmetadata=()=>{
       const stage=document.querySelector('.vidStage');
@@ -7196,8 +7252,8 @@ window.Hub = {
     };
     player.style.display='none';
     if(miss){ miss.style.display='block'; miss.textContent='Loading…'; }
-    player.poster=(meta.thumb||'');player.src=meta.src+(meta.src.indexOf('?')>=0?'&':'?')+'v=13';var __pi=document.getElementById('v_posterImg');if(__pi){__pi.src=(meta.thumb||'');__pi.style.display=meta.thumb?'block':'none';player.addEventListener('playing',function(){__pi.style.display='none';},{once:true});}player.volume=(/w1_(concept|literature)\.mp4/.test(meta.src||'')?0.56:1); /* QAFIXCR3 H2R3-04 the week-1 films at the page's voice level (-14 -> about -19 LUFS) */
-    player.load();
+    player.poster=(meta.thumb||'');M9MathStream.setSource(player,meta.src+(meta.src.indexOf('?')>=0?'&':'?')+'v=13');var __pi=document.getElementById('v_posterImg');if(__pi){__pi.src=(meta.thumb||'');__pi.style.display=meta.thumb?'block':'none';player.addEventListener('playing',function(){__pi.style.display='none';},{once:true});}player.volume=(/w1_(concept|literature)\.mp4/.test(meta.src||'')?0.56:1); /* QAFIXCR3 H2R3-04 the week-1 films at the page's voice level (-14 -> about -19 LUFS) */
+    M9MathStream.load(player);
   },
   stopConceptVideo(){
     if(this._conceptTimer){ clearTimeout(this._conceptTimer); this._conceptTimer=null; }
@@ -7216,7 +7272,7 @@ window.Hub = {
     }
     if(startBtn){ startBtn.hidden=true; startBtn.classList.remove('is-pressing'); }
     if(player){
-      try{ player.pause(); player.removeAttribute('src'); player.load(); }catch(e){}
+      try{ player.pause(); M9MathStream.clearSource(player); }catch(e){}
       player.style.width='';
       player.style.height='';
       player.style.aspectRatio='';
@@ -7277,7 +7333,7 @@ window.Hub = {
     if(!stage||!player||!pick) return;
 
     if(this._conceptTimer){ clearTimeout(this._conceptTimer); this._conceptTimer=null; }
-    try{ player.pause(); player.removeAttribute('src'); player.load(); }catch(e){}
+    try{ player.pause(); M9MathStream.clearSource(player); }catch(e){}
     stage.classList.remove('is-video','is-missing','is-ready');
     if(startBtn) startBtn.hidden=true;
 
@@ -7335,7 +7391,7 @@ window.Hub = {
         stage.classList.add('is-missing');
         stage.classList.remove('is-ready');
         if(startBtn) startBtn.hidden=true;
-        if(miss) miss.textContent='Video coming soon — add "'+meta.src+'" to the assets folder.';
+        if(miss) miss.textContent=(player.getAttribute('data-stream-lesson')==='math')?'The video could not load. Please try again.':'Video coming soon — add "'+meta.src+'" to the assets folder.';
       };
       player.onloadedmetadata=()=>{
         const ratio=16/9;
@@ -7352,8 +7408,8 @@ window.Hub = {
         if(startBtn) startBtn.hidden=false;
         try{ player.pause(); player.currentTime=0; }catch(e){}
       };
-      player.poster=(meta.thumb||'');player.src=meta.src;var __pi=document.getElementById('v_posterImg');if(__pi){__pi.src=(meta.thumb||'');__pi.style.display=meta.thumb?'block':'none';player.addEventListener('playing',function(){__pi.style.display='none';},{once:true});}player.volume=(/w1_(concept|literature)\.mp4/.test(meta.src||'')?0.56:1); /* QAFIXCR3 H2R3-04 */
-      player.load();
+      player.poster=(meta.thumb||'');M9MathStream.setSource(player,meta.src);var __pi=document.getElementById('v_posterImg');if(__pi){__pi.src=(meta.thumb||'');__pi.style.display=meta.thumb?'block':'none';player.addEventListener('playing',function(){__pi.style.display='none';},{once:true});}player.volume=(/w1_(concept|literature)\.mp4/.test(meta.src||'')?0.56:1); /* QAFIXCR3 H2R3-04 */
+      M9MathStream.load(player);
     }, 500);
   },
   week:1,
@@ -8406,7 +8462,7 @@ var pv=Hub.playVideo;
 Hub.playVideo=function(act){ var meta=this.videos&&this.videos[act]; var miss=document.getElementById('v_missing');
   if(meta&&!meta.src){ var title=document.getElementById('v_title'), player=document.getElementById('v_player'), sb=document.getElementById('v_startBtn'), shell=document.querySelector('.vidShell');
     if(title) title.textContent=meta.title; this.buildLitChapters(act); if(shell) shell.classList.remove('is-ready','is-playing'); if(sb) sb.hidden=true;
-    if(player){ try{ player.pause(); }catch(e){} player.removeAttribute('src'); player.style.display='none'; }
+    if(player){ try{ player.pause(); }catch(e){} M9MathStream.clearSource(player); player.style.display='none'; }
     if(miss){ miss.className='m9Soon'; miss.style.display='flex'; miss.textContent=(act==='poem')?'The Math Literature film is coming soon. You can read aloud now: press the Read Aloud button.':'The video is coming soon.'; }
     return; }
   if(miss) miss.classList.remove('m9Soon'); return pv.apply(this,arguments); };
