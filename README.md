@@ -1,7 +1,7 @@
-# GP Month 9 - Math_LevelC_M9
+# GP Month 9 — Math_LevelC_M9
 
-Deploy 3 Week 1 Math learner site. Weeks 2-4 remain locked while they are being completed.
+Updated Week 1 Math learner site. Weeks 2–4 remain locked.
 
-Static pages are published to GitHub Pages; runtime assets are served from Cloudflare R2.
+Long lesson videos use Cloudflare Stream. Images and recorded audio use Cloudflare R2. Transparent character animations retain their original WebM bytes on this GitHub Pages site.
 
 GP English: https://www.gpeisenglish.com/level-c-weekly-099

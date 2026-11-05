@@ -1023,8 +1023,8 @@ window.GPStreamMediaRegistry={
       "ready": true
     },
     "Math_LevelA_M9/assets/videos/w1_literature.mp4": {
-      "uid": "05412162b69e64c125f6947cd3424520",
-      "sourceSha256": "907a92a4e6f471ed320029640aca2fcaa36c6e3482899f58968388d8ca3d6904",
+      "uid": "243e8f43f9033d4d10dd2709e3e467ef",
+      "sourceSha256": "f04a1ebbb646e7aa43224c314392459e1101b9c9016ba399e05419968ed303c7",
       "ready": true
     },
     "Math_LevelB_M9/assets/videos/w1_concept.mp4": {
@@ -1033,18 +1033,18 @@ window.GPStreamMediaRegistry={
       "ready": true
     },
     "Math_LevelB_M9/assets/videos/w1_literature.mp4": {
-      "uid": "af89fb7e499abf9ebd7ff6dfdf11de8c",
-      "sourceSha256": "610e355b7cfe159e7390fbd867e62e259d0a26884e7631bb79f5a6666286dd55",
+      "uid": "ca19616d40729bbca11a01148c48c92c",
+      "sourceSha256": "86ff8bb31a0325c102f5c732c9cb1879869e296d4aef3b25abbb8c38cf00af33",
       "ready": true
     },
     "Math_LevelC_M9/assets/videos/w1_concept.mp4": {
-      "uid": "525a9d7def9be3a6e6e8d9ff034e5a4c",
-      "sourceSha256": "e263338d025f7b2c458e6ec11677354b53da78476e8cf5c1bfbb588baa9ae06e",
+      "uid": "ab119bace8642e4cdee5c57a19bdbae7",
+      "sourceSha256": "366a0fff3534a242dfead9b5679045bedf0222431186e86bcff7df612d14a51e",
       "ready": true
     },
     "Math_LevelC_M9/assets/videos/w1_literature.mp4": {
-      "uid": "4c0fa3091489f9d1db197df1d3d1bf11",
-      "sourceSha256": "9a0df28968f59e2522be4c5b72a837815307de668a90a53c469a892dfc4cd233",
+      "uid": "efa4be8cf1901448e6935c4eb92e93b8",
+      "sourceSha256": "d6c1ee1d8f5b44ae2f2ea89b432378ae2f4a31d8fc3e39baa7c70b09612b76c0",
       "ready": true
     },
     "reports/level-a/assets/month9/dressup/week-1/videos/01-gerry-cloud-shoes-grok-v1.mp4": {
