@@ -1286,6 +1286,36 @@ window.GPStreamMediaRegistry={
       "uid": "ce7ebe9a4ce8889c14f125b90711f7a6",
       "sourceSha256": "f5656ee13ea6b2c9779e52bed158ee5d45875074a551e61eef3cf8202c78ac0f",
       "ready": true
+    },
+    "Math_LevelA_M9/assets/videos/w2_concept.mp4": {
+      "uid": "58a149ed6c29a904a8176e1bede582d7",
+      "sourceSha256": "1e9744dbc15b259fc38ad76abe36f7a5f99d389c01ffb38fe114891ba6fcaab3",
+      "ready": true
+    },
+    "Math_LevelA_M9/assets/videos/w2_literature.mp4": {
+      "uid": "621df25e6eed3cd898f90f8019ee365f",
+      "sourceSha256": "c286d9a822d6c8d7bf9e59e0c148ccd53edcbaab97f565d16aa3fdf3d5fc233a",
+      "ready": true
+    },
+    "Math_LevelB_M9/assets/videos/w2_concept.mp4": {
+      "uid": "3a6a3a32c3aed30bd30eb5ea83e39a49",
+      "sourceSha256": "6cfe1806e499c2239ee15fd1d4e9e01f4f562c5210212d3a0ff5f380e23bc115",
+      "ready": true
+    },
+    "Math_LevelB_M9/assets/videos/w2_literature.mp4": {
+      "uid": "ab6b6ffbf80a89bfe3529847a181c28b",
+      "sourceSha256": "d7458f0e4db33422c3f49dc91a2e4fe44537df4a9c03a848f401184eb1d89ad1",
+      "ready": true
+    },
+    "Math_LevelC_M9/assets/videos/w2_concept.mp4": {
+      "uid": "544057c82d6de63ecbb2622c3ad38a6d",
+      "sourceSha256": "bdab81feee03ef1558494eb2c7585a52978619f6958c5d172997720670599bea",
+      "ready": true
+    },
+    "Math_LevelC_M9/assets/videos/w2_literature.mp4": {
+      "uid": "7b38329d2a66047c1e5c7783deaf26b1",
+      "sourceSha256": "e6511bed3c7e9f942cb6212e03db97a237d4ad45f39322a76839e2f44577430b",
+      "ready": true
     }
   }
 };
