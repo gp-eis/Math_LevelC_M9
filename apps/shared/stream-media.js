@@ -1,4 +1,4 @@
-window.GPStreamMediaRegistry={
+window.GPStreamMediaRegistry = {
   "schemaVersion": 1,
   "customerHost": "customer-dtehoo3asbv763yl.cloudflarestream.com",
   "bySource": {
@@ -1315,6 +1315,36 @@ window.GPStreamMediaRegistry={
     "Math_LevelC_M9/assets/videos/w2_literature.mp4": {
       "uid": "7b38329d2a66047c1e5c7783deaf26b1",
       "sourceSha256": "e6511bed3c7e9f942cb6212e03db97a237d4ad45f39322a76839e2f44577430b",
+      "ready": true
+    },
+    "Math_LevelA_M9/assets/videos/w3_concept.mp4": {
+      "uid": "afdd7f3ddc3fa5c84d5b7f1eabfb8306",
+      "sourceSha256": "b669a5cce76a1ba75a5e485485c2cde62c8629c7581c24b1e885eeaa3dbcc007",
+      "ready": true
+    },
+    "Math_LevelA_M9/assets/videos/w3_literature.mp4": {
+      "uid": "b488d1843b512336c37ec421dcaf9642",
+      "sourceSha256": "74c4f9d87b7ea138d6c5e15719ccb513fb12fc117186139e7304ea8dc7ee8133",
+      "ready": true
+    },
+    "Math_LevelB_M9/assets/videos/w3_concept.mp4": {
+      "uid": "4fdf8e031c7853cc742a495112cd9dab",
+      "sourceSha256": "07f941e3f74cbe3328a3894f8f9aa237501f1fe312b084697fb6bc757cf1216b",
+      "ready": true
+    },
+    "Math_LevelB_M9/assets/videos/w3_literature.mp4": {
+      "uid": "bdae6a2f52a4145c84808684b8af5607",
+      "sourceSha256": "711e92a13528a8fe21741552f3e892846a951eef996008126aaf379e0ad3f38e",
+      "ready": true
+    },
+    "Math_LevelC_M9/assets/videos/w3_concept.mp4": {
+      "uid": "dd69bcc5bd593601ab15cf7c9158dd04",
+      "sourceSha256": "0f38f667caae46eb9e47ac92517008742727a14d64937626283918b6ab403a66",
+      "ready": true
+    },
+    "Math_LevelC_M9/assets/videos/w3_literature.mp4": {
+      "uid": "246c00404b552459b7705b34ce9d9bd3",
+      "sourceSha256": "e6a24d5d603bfad704efe78a38e9f5441a122388579370749b620bd44d6c55a1",
       "ready": true
     }
   }
