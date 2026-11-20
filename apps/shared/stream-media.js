@@ -1288,8 +1288,8 @@ window.GPStreamMediaRegistry = {
       "ready": true
     },
     "Math_LevelA_M9/assets/videos/w2_concept.mp4": {
-      "uid": "58a149ed6c29a904a8176e1bede582d7",
-      "sourceSha256": "1e9744dbc15b259fc38ad76abe36f7a5f99d389c01ffb38fe114891ba6fcaab3",
+      "uid": "9b4c0020504574f35de1f2916dbf56c5",
+      "sourceSha256": "505ca9f94db2245c97e0f87a0315c1a8e5b2a13b7f52253cb41cbf0dbac28aec",
       "ready": true
     },
     "Math_LevelA_M9/assets/videos/w2_literature.mp4": {
