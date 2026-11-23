@@ -1346,6 +1346,36 @@ window.GPStreamMediaRegistry = {
       "uid": "246c00404b552459b7705b34ce9d9bd3",
       "sourceSha256": "e6a24d5d603bfad704efe78a38e9f5441a122388579370749b620bd44d6c55a1",
       "ready": true
+    },
+    "Math_LevelA_M9/assets/videos/w4_concept.mp4": {
+      "uid": "5fec43dbf871db8a1e2bdcbd6c6fd2dd",
+      "sourceSha256": "0fc87f5e626d14bb7c35b5b92213c22ebe03b1dcfef0110298b788bf497b4365",
+      "ready": true
+    },
+    "Math_LevelA_M9/assets/videos/w4_literature.mp4": {
+      "uid": "32e740a118966f76275565270a612f42",
+      "sourceSha256": "4fd507568517dec815d15024ff4325534d4930e598bd9ab2a71890f3e35b9e44",
+      "ready": true
+    },
+    "Math_LevelB_M9/assets/videos/w4_concept.mp4": {
+      "uid": "516a462900ebbacaa08b040e0ff080aa",
+      "sourceSha256": "afc5f4de96a795528c32d4966a51b4444f488221410dc079c17ae20ffc499add",
+      "ready": true
+    },
+    "Math_LevelB_M9/assets/videos/w4_literature.mp4": {
+      "uid": "311bd58168be2b15dbbe4cdd1a4e404f",
+      "sourceSha256": "ba293661a9a559e5b436d4b5c9be18484b4635da7540bf649015e297ca839cf2",
+      "ready": true
+    },
+    "Math_LevelC_M9/assets/videos/w4_concept.mp4": {
+      "uid": "ea1bf69a27f0b86b66552dc9d569f4c9",
+      "sourceSha256": "e3674e96b286dda7afc6299afe2dd01bf679ddebd5e49e7ee4f02833b10e67e6",
+      "ready": true
+    },
+    "Math_LevelC_M9/assets/videos/w4_literature.mp4": {
+      "uid": "abcc22d48e4e1844f7f4db5c6d6ffd4d",
+      "sourceSha256": "32bea0e64e20dd68c4f4860db59ff84f3d58fea8d0408b5edc61d0df1f14e894",
+      "ready": true
     }
   }
 };
